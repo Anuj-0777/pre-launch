@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fresh Flow Pre-Launch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0f1115;
+      --bg-secondary: #1a1c23;
+      --text-primary: #FFFFE3;
+      --text-secondary: #CBCBCB;
+      --accent: #6D8196;
+      --border: rgba(109, 129, 150, 0.2);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HEADER (Now Absolute so it scrolls away) ===== */
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(20, 22, 26, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .company-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 8px;
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    /* ===== HERO (Height adjusted to fit the new bottom bar) ===== */
+    .hero {
+      margin-top: 80px;
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 160px); /* 100vh - 80px(header) - 80px(sticky bar) */
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(15, 17, 21, 0.8) 0%, transparent 50%, rgba(15, 17, 21, 0.8) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .spec {
+      position: absolute;
+      padding: 20px 25px;
+      border-radius: 15px;
+      font-size: 24px;
+      font-weight: bolder;
+      max-width: 250px;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(74, 74, 74, 0.25);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .spec:hover {
+      background: rgba(74, 74, 74, 0.4);
+      border-color: var(--accent);
+    }
+
+    .left-spec {
+      left: 5%;
+      top: 35%;
+      color: var(--text-secondary);
+    }
+
+    .right-spec {
+      right: 5%;
+      top: 35%;
+      color: var(--text-primary);
+      font-size: 28px;
+    }
+
+    .intro-text {
+      font-size: 24px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .product-name {
+      font-size: 48px;
+      font-family: 'Bebas Neue', sans-serif;
+      color: var(--text-primary);
+      letter-spacing: 6px;
+    }
+
+    /* ===== STICKY NAVIGATION BAR ===== */
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(20, 22, 26, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 60px;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .sticky-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      color: var(--text-primary);
+      letter-spacing: 4px;
+    }
+
+    .sticky-launch {
+      font-size: 16px;
+      color: var(--accent);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* ===== HIGHLIGHTS ===== */
+    .highlights {
+      background: linear-gradient(135deg, #0f1115 0%, #1a1c23 100%);
+      padding: 100px 40px;
+      position: relative;
+    }
+
+    .highlights-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--text-primary);
+      margin-bottom: 50px;
+      letter-spacing: 2px;
+    }
+
+    .slider-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      background: rgba(20, 22, 26, 0.6);
+      border: 1px solid var(--border);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 16px;
+      transition: transform 0.6s ease;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 600px;
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--bg-secondary);
+      border: 1px solid #4A4A4A;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px;
+      color: var(--text-secondary);
+      background: linear-gradient(to top, rgba(15, 17, 21, 0.95), transparent);
+    }
+
+    .slide-text h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+      letter-spacing: 1px;
+    }
+
+    .slide-text p {
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .slide-text p span {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    /* ===== SLIDER CONTROLS ===== */
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .play-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, #4A4A4A 100%);
+      color: var(--text-primary);
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .progress-bars {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex: 1;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: rgba(74, 74, 74, 0.4);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .progress-bar:hover {
+      height: 8px;
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent) 0%, #a4b5c4 100%);
+      border-radius: 10px;
+      transition: width 0.05s linear;
+    }
+
+    .progress-bar.active .fill {
+      width: 100%;
+    }
+
+    /* ===== BUTTONS ===== */
+    button {
+      background: linear-gradient(135deg, var(--accent) 0%, #4A4A4A 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px 25px;
+      color: var(--text-primary);
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== PRODUCT SHOWCASE ===== */
+    .product-showcase {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+    }
+
+    .product-showcase img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+    }
+
+    .showcase-text {
+      position: absolute;
+      top: 50%;
+      left: 60px;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      max-width: 350px;
+      z-index: 10;
+    }
+
+    .showcase-brand {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .showcase-brand span {
+      font-size: 12px;
+      display: block;
+      letter-spacing: 3px;
+      font-weight: 400;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+
+    .showcase-tagline {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--text-primary);
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+
+    .showcase-desc {
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    /* ===== SPACER ===== */
+    .spacer {
+      width: 100%;
+      background: var(--bg-primary);
+      padding: 50px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spacer img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ===== VIDEO CONTAINER ===== */
+    #video-container {
+      height: 500vh;
+      position: relative;
+      background: var(--bg-primary);
+    }
+
+    #scroll-video {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+
+    /* ===== GALLERY ===== */
+    .product-gallery-wrapper {
+      width: 100%;
+      height: 350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 50px;
+      background: var(--bg-primary);
+      perspective: 1000px;
+    }
+
+    .gallery-item {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+      transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+      opacity: 0;
+      border: 1px solid #4A4A4A;
+    }
+
+    /* ===== DIAL CONTROLS ===== */
+    .controls-wrapper {
+      position: relative;
+      width: 240px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--bg-primary);
+      padding-bottom: 60px;
+    }
+
+    .lock-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+    }
+
+    .semicircle-dial {
+      width: 240px;
+      height: 120px;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at bottom, #4A4A4A 0%, #2a2a2a 70%, #111 100%);
+      border-radius: 120px 120px 0 0;
+      border: 1px solid var(--accent);
+      border-bottom: none;
+    }
+
+    .dial-marker {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 15px;
+      background: var(--accent);
+      border-radius: 0 0 4px 4px;
+      z-index: 10;
+    }
+
+    .dial-num {
+      position: absolute;
+      left: 50%;
+      bottom: 0px;
+      width: 40px;
+      height: 40px;
+      margin-left: -20px;
+      margin-bottom: -20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--text-primary);
+      transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+    }
+
+    .invisible-slider {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: grab;
+      z-index: 20;
+    }
+
+    .invisible-slider:active {
+      cursor: grabbing;
+    }
+
+    /* ===== EXPERIENCE SECTION ===== */
+    .silence-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: var(--bg-primary);
+    }
+
+    .silence-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.4);
+    }
+
+    .silence-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 17, 21, 0.8) 0%, rgba(15, 17, 21, 0.4) 50%, rgba(15, 17, 21, 0.8) 100%);
+    }
+
+    .silence-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 80px;
+    }
+
+    .silence-headline {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .silence-left {
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--text-primary);
+      max-width: 45%;
+    }
+
+    .silence-desc {
+      position: absolute;
+      right: 80px;
+      transform: translateY(10px);
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      text-align: left;
+      max-width: 280px;
+    }
+
+    .silence-play-wrap {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .silence-play-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      letter-spacing: 0.3px;
+      text-align: center;
+    }
+
+    .silence-play-label strong {
+      color: var(--text-primary);
+    }
+
+    /* ===== TECH SPECS ===== */
+    .specs-section {
+      padding: 120px 20px;
+      background: var(--bg-secondary);
+    }
+
+    .specs-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 80px;
+      color: var(--text-primary);
+    }
+
+    .specs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+    }
+
+    .spec-label {
+      font-size: 17px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .spec-value {
+      font-size: 17px;
+      color: var(--text-primary);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      padding: 160px 20px;
+      background: var(--bg-primary);
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-content {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-content h2 {
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+
+    .cta-content p {
+      font-size: 19px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 60px 20px 40px;
+    }
+
+    .footer-container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h4 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 8px;
+    }
+
+    .footer-column a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      header {
+        height: 60px;
+      }
+
+      .company-logo {
+        font-size: 24px;
+      }
+
+      .hero {
+        margin-top: 60px;
+        height: calc(100vh - 140px); /* 60px Header + 80px Sticky Bar */
+      }
+
+      .sticky-bar {
+        padding: 0 20px;
+      }
+
+      .sticky-launch {
+        display: none; /* Hide date on mobile to save space */
+      }
+
+      .product-name {
+        font-size: 32px;
+      }
+
+      .spec {
+        max-width: 200px;
+        font-size: 16px;
+      }
+
+      .left-spec {
+        left: 10px;
+      }
+
+      .right-spec {
+        right: 10px;
+        font-size: 20px;
+      }
+
+      .highlights-title {
+        font-size: 20px;
+      }
+
+      .slide {
+        height: 300px;
+      }
+
+      .showcase-text {
+        left: 20px;
+        max-width: 280px;
+      }
+
+      .showcase-brand {
+        font-size: 28px;
+      }
+
+      .silence-left {
+        font-size: 32px;
+      }
+
+      .silence-desc {
+        right: 20px;
+        max-width: 200px;
+      }
+
+      .spec-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .spec-value {
+        text-align: left;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="company-logo">TECHTOTEM</div>
+  </header>
+
+  <section class="hero">
+    <img src="1st img.jpeg" alt="Hero Background">
+
+    <div class="spec left-spec">
+      <div class="intro-text">Introducing</div>
+      <div class="product-name">Fresh Flow</div>
+    </div>
+
+    <div class="spec right-spec">
+      Advanced Ceiling Fan Diffuser
+    </div>
+  </section>
+
+  <div class="sticky-bar">
+    <div class="sticky-brand">Fresh Flow</div>
+    <div class="sticky-launch">Launching 15th October 2026</div>
+    <button onclick="alert('Pre-order registration opening soon!')">Pre-Book Now</button>
+  </div>
+
+  <section class="highlights">
+    <div class="highlights-title">Get the Highlights</div>
+
+    <div class="slider-wrapper">
+      <div class="slider-track" id="sliderTrack">
+        <div class="slide">
+          <img src="simple fan img.png" alt="Triple Tank System">
+          <div class="slide-text">
+            <h3>Triple Tank System</h3>
+            <p>Hold <span>sanitizer, fragrance, and room freshener</span> simultaneously.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <img src="white fan .jpeg" alt="Piezo Technology">
+          <div class="slide-text">
+            <h3>Piezo Technology</h3>
+            <p>Advanced <span>ultrasonic misting</span> for ultra-fine particles.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">⏱️</div>
+          <div class="slide-text">
+            <h3>1-Month Durability</h3>
+            <p><span>30 days</span> of continuous air freshening.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">🔄</div>
+          <div class="slide-text">
+            <h3>Easy Installation</h3>
+            <p>Mounts on any ceiling fan in <span>minutes</span>.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">🎨</div>
+          <div class="slide-text">
+            <h3>Modern Design</h3>
+            <p><span>Sleek cylindrical</span> shape complements any décor.</p>
+          </div>
+        </div>
+
+        <div class="slide">
+          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">💰</div>
+          <div class="slide-text">
+            <h3>Cost-Effective</h3>
+            <p>Affordable solution compared to <span>traditional diffusers</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-controls">
+      <button class="play-btn" id="playBtn">▶</button>
+      <div class="progress-bars" id="progressBars"></div>
+    </div>
+  </section>
+
+  <section class="product-showcase">
+    <img src="chm spr.jpeg" alt="Product View">
+
+    <div class="showcase-text">
+      <div class="showcase-brand">
+        Fresh Flow
+        <span>YOUR AIR. MASTERED</span>
+      </div>
+
+      <div class="showcase-tagline">Transform Your Space</div>
+
+      <div class="showcase-desc">
+        FreshFlow intelligently distributes sanitizers, fragrances, and room fresheners using advanced piezo-plate technology. Experience perfect misting coverage with whisper-quiet operation.
+      </div>
+
+      <button onclick="alert('Thank you! Pre-order details coming soon.')">
+        Pre-Order Now
+      </button>
+    </div>
+  </section>
+
+  <div id="video-container">
+    <video id="scroll-video" src="v-1.mp4" muted playsinline preload="auto"></video>
+  </div>
+
+  <div class="spacer">
+    <img src="bottle.png" alt="Bottle Storage">
+  </div>
+
+  <div class="product-gallery-wrapper">
+    <img src="prd lst.jpeg" class="gallery-item" alt="Product 1">
+    <img src="fan view.jpeg" class="gallery-item" alt="Product 2">
+    <img src="simple fan img.png" class="gallery-item" alt="Product 3">
+    <img src="white fan .jpeg" class="gallery-item" alt="Product 4">
+    <img src="simple product img.jpeg" class="gallery-item" alt="Product 5">
+  </div>
+
+  <div class="controls-wrapper">
+    <div class="lock-label">Swipe Dial to Rotate</div>
+
+    <div class="semicircle-dial">
+      <div class="dial-marker"></div>
+      <div class="dial-num">1</div>
+      <div class="dial-num">2</div>
+      <div class="dial-num">3</div>
+      <div class="dial-num">4</div>
+      <div class="dial-num">5</div>
+
+      <input type="range" id="gallerySlider" min="0" max="4" step="0.01" value="2" class="invisible-slider">
+    </div>
+  </div>
+
+  <section class="silence-section">
+    <img src="prd lst.jpeg" alt="Product Detail" class="silence-bg">
+
+    <div class="silence-overlay"></div>
+
+    <div class="silence-content">
+      <div class="silence-headline">
+        <span class="silence-left">Experience the Future</span>
+      </div>
+
+      <div class="silence-desc">
+        Advanced piezo technology creates<br>
+        micro-fine mist distribution.<br>
+        Your space, perfectly fresh.
+      </div>
+    </div>
+
+    <div class="silence-play-wrap">
+      <p class="silence-play-label">Ready to transform your home? <strong>Pre-order FreshFlow</strong></p>
+      <button>Get Early Access</button>
+    </div>
+  </section>
+
+  <section class="specs-section">
+    <div class="specs-container">
+      <h2 class="section-title">Tech Specs</h2>
+      <div class="specs-list">
+        <div class="spec-item">
+          <span class="spec-label">Technology</span>
+          <span class="spec-value">Piezo Ultrasonic Misting</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Tank Capacity</span>
+          <span class="spec-value">Triple 100ml Tanks</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Duration</span>
+          <span class="spec-value">30 Days Continuous</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Installation</span>
+          <span class="spec-value">Universal Ceiling Fan Mount</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Power</span>
+          <span class="spec-value">Low Energy Consumption</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Operation</span>
+          <span class="spec-value">Whisper-Quiet Performance</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Design</span>
+          <span class="spec-value">Sleek Cylindrical Form</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Be First in Line</h2>
+      <p>Register now for exclusive early-bird pricing and be among the first to experience Fresh Flow.</p>
+      <button onclick="alert('Thank you! We will notify you when pre-orders open.')">Pre-Order Now</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#specs">Tech Specs</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#preorder">Pre-order</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Warranty</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Fresh Flow. All rights reserved. Launching October 15, 2026.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* VIDEO SCROLL */
+    const video = document.getElementById('scroll-video');
+    const videoContainer = document.getElementById('video-container');
+
+    video.addEventListener('loadedmetadata', () => {
+      window.addEventListener('scroll', () => {
+        const containerTop = videoContainer.offsetTop;
+        const containerHeight = videoContainer.offsetHeight;
+        const windowHeight = window.innerHeight;
+        let scrolledDistance = window.scrollY - containerTop;
+        const maxScrollableDistance = containerHeight - windowHeight;
+        let scrollPercentage = scrolledDistance / maxScrollableDistance;
+        if (scrollPercentage < 0) scrollPercentage = 0;
+        if (scrollPercentage > 1) scrollPercentage = 1;
+        video.currentTime = scrollPercentage * video.duration;
+      });
+    });
+
+    /* SLIDER */
+    const track = document.getElementById("sliderTrack");
+    const progressBarsContainer = document.getElementById("progressBars");
+    const playBtn = document.getElementById("playBtn");
+
+    const slides = track.querySelectorAll(".slide");
+    const totalSlides = slides.length;
+    const slideDuration = 4000;
+
+    let slideWidth = slides[0].getBoundingClientRect().width;
+    window.addEventListener('resize', () => {
+      slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+    });
+
+    let currentSlide = 0;
+    let isPlaying = true;
+    let progressInterval = null;
+    let progressValue = 0;
+
+    slides.forEach((_, i) => {
+      const bar = document.createElement("div");
+      bar.classList.add("progress-bar");
+      const fill = document.createElement("div");
+      fill.classList.add("fill");
+      bar.appendChild(fill);
+      bar.addEventListener("click", () => goToSlide(i));
+      progressBarsContainer.appendChild(bar);
+    });
+
+    const bars = progressBarsContainer.querySelectorAll(".progress-bar");
+
+    function goToSlide(index) {
+      currentSlide = index;
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+      resetProgress();
+      updateBars();
+      if (isPlaying) startProgress();
+    }
+
+    function updateBars() {
+      bars.forEach((bar, i) => {
+        bar.classList.toggle("active", i === currentSlide);
+      });
+    }
+
+    function resetProgress() {
+      clearInterval(progressInterval);
+      progressValue = 0;
+      if (bars[currentSlide]) {
+        bars[currentSlide].querySelector(".fill").style.width = "0%";
+      }
+    }
+
+    function startProgress() {
+      resetProgress();
+      const steps = slideDuration / 50;
+      const increment = 100 / steps;
+
+      progressInterval = setInterval(() => {
+        progressValue += increment;
+        if (bars[currentSlide]) {
+          bars[currentSlide].querySelector(".fill").style.width = progressValue + "%";
+        }
+        if (progressValue >= 100) {
+          clearInterval(progressInterval);
+          currentSlide = (currentSlide + 1) % totalSlides;
+          track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+          updateBars();
+          if (isPlaying) startProgress();
+        }
+      }, 50);
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        isPlaying = false;
+        clearInterval(progressInterval);
+        playBtn.innerHTML = "▶";
+      } else {
+        isPlaying = true;
+        playBtn.innerHTML = "⏸";
+        startProgress();
+      }
+    });
+
+    updateBars();
+    startProgress();
+    playBtn.innerHTML = "⏸";
+
+    /* GALLERY */
+    const items = document.querySelectorAll('.gallery-item');
+    const numbers = document.querySelectorAll('.dial-num');
+    const slider = document.getElementById('gallerySlider');
+
+    slider.max = items.length - 1;
+    slider.value = Math.floor(items.length / 2);
+
+    function updateGalleryAndDial(position) {
+      items.forEach((item, index) => {
+        const offset = index - position;
+        const absOffset = Math.abs(offset);
+
+        const xPosition = offset * 130;
+        const zPosition = 50 - (absOffset * 80);
+        const scale = Math.max(0.7, 1.2 - (absOffset * 0.3));
+        const opacity = Math.max(0.3, 1 - (absOffset * 0.6));
+
+        let rotation = offset * 25;
+        if (rotation > 30) rotation = 30;
+        if (rotation < -30) rotation = -30;
+
+        item.style.transform = `translateX(${xPosition}px) translateZ(${zPosition}px) scale(${scale}) rotateY(${rotation}deg)`;
+        item.style.opacity = opacity;
+        item.style.zIndex = Math.round(10 - absOffset);
+      });
+
+      numbers.forEach((num, index) => {
+        const offset = index - position;
+        const angle = offset * 35;
+        num.style.transform = `rotate(${angle}deg) translateY(-95px) rotate(${-angle}deg)`;
+        const absOffset = Math.abs(offset);
+        num.style.opacity = Math.max(0, 1 - (absOffset * 0.5));
+      });
+    }
+
+    updateGalleryAndDial(parseFloat(slider.value));
+
+    slider.addEventListener('input', (e) => {
+      updateGalleryAndDial(parseFloat(e.target.value));
+    });
+
+    slider.addEventListener('change', (e) => {
+      const nearestImageIndex = Math.round(parseFloat(e.target.value));
+      slider.value = nearestImageIndex;
+      updateGalleryAndDial(nearestImageIndex);
+    });
+  </script>
+
+</body>
+</html>
