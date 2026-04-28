@@ -7,12 +7,17 @@
   <title>Fresh Flow Pre-Launch</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false } // Prevents Tailwind from breaking your existing CSS
     }
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg-primary: #0f1115;
@@ -23,9 +28,7 @@
       --border: rgba(109, 129, 150, 0.2);
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -36,7 +39,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER (Now Absolute so it scrolls away) ===== */
+    /* ===== HEADER ===== */
     header {
       position: absolute;
       top: 0;
@@ -59,12 +62,12 @@
       transition: all 0.3s ease;
     }
 
-    /* ===== HERO (Height adjusted to fit the new bottom bar) ===== */
+    /* ===== HERO ===== */
     .hero {
       margin-top: 80px;
       position: relative;
       width: 100%;
-      height: calc(100vh - 160px); /* 100vh - 80px(header) - 80px(sticky bar) */
+      height: calc(100vh - 160px);
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -106,18 +109,8 @@
       border-color: var(--accent);
     }
 
-    .left-spec {
-      left: 5%;
-      top: 35%;
-      color: var(--text-secondary);
-    }
-
-    .right-spec {
-      right: 5%;
-      top: 35%;
-      color: var(--text-primary);
-      font-size: 28px;
-    }
+    .left-spec { left: 5%; top: 35%; color: var(--text-secondary); }
+    .right-spec { right: 5%; top: 35%; color: var(--text-primary); font-size: 28px; }
 
     .intro-text {
       font-size: 24px;
@@ -158,12 +151,7 @@
       letter-spacing: 4px;
     }
 
-    .sticky-launch {
-      font-size: 16px;
-      color: var(--accent);
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
+    .sticky-launch { font-size: 16px; color: var(--accent); font-weight: 500; letter-spacing: 1px; }
 
     /* ===== HIGHLIGHTS ===== */
     .highlights {
@@ -172,133 +160,16 @@
       position: relative;
     }
 
-    .highlights-title {
-      font-size: 28px;
-      font-weight: bold;
-      color: var(--text-primary);
-      margin-bottom: 50px;
-      letter-spacing: 2px;
-    }
-
-    .slider-wrapper {
-      position: relative;
-      overflow: hidden;
-      border-radius: 20px;
-      background: rgba(20, 22, 26, 0.6);
-      border: 1px solid var(--border);
-      padding: 20px;
-      backdrop-filter: blur(10px);
-    }
-
-    .slider-track {
-      display: flex;
-      gap: 16px;
-      transition: transform 0.6s ease;
-    }
-
-    .slide {
-      min-width: 100%;
-      height: 600px;
-      position: relative;
-      border-radius: 15px;
-      overflow: hidden;
-      flex-shrink: 0;
-      background: var(--bg-secondary);
-      border: 1px solid #4A4A4A;
-    }
-
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .slide-text {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 30px;
-      color: var(--text-secondary);
-      background: linear-gradient(to top, rgba(15, 17, 21, 0.95), transparent);
-    }
-
-    .slide-text h3 {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: var(--text-primary);
-      letter-spacing: 1px;
-    }
-
-    .slide-text p {
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .slide-text p span {
-      font-weight: bold;
-      color: var(--accent);
-    }
-
-    /* ===== SLIDER CONTROLS ===== */
-    .slider-controls {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .play-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent) 0%, #4A4A4A 100%);
-      color: var(--text-primary);
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 0;
-    }
-
-    .play-btn:hover {
-      transform: scale(1.1);
-    }
-
-    .progress-bars {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex: 1;
-    }
-
-    .progress-bar {
-      flex: 1;
-      height: 4px;
-      background: rgba(74, 74, 74, 0.4);
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .progress-bar:hover {
-      height: 8px;
-    }
-
-    .progress-bar .fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--accent) 0%, #a4b5c4 100%);
-      border-radius: 10px;
-      transition: width 0.05s linear;
-    }
-
-    .progress-bar.active .fill {
-      width: 100%;
-    }
+    /* Framer Motion Alternative Animations (CSS) */
+    @keyframes pulseScale { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    @keyframes fadePulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+    @keyframes barGrow { from { height: 0; } }
+    @keyframes widthGrow { from { width: 0; } }
+    
+    .anim-pulse-scale { animation: pulseScale 2s infinite; }
+    .anim-fade-pulse { animation: fadePulse 2s infinite; }
+    .anim-bar-grow { animation: barGrow 0.5s ease-out forwards; }
+    .anim-width-grow { animation: widthGrow 1s ease-out forwards; }
 
     /* ===== BUTTONS ===== */
     button {
@@ -320,495 +191,98 @@
     }
 
     /* ===== PRODUCT SHOWCASE ===== */
-    .product-showcase {
-      position: relative;
-      width: 100%;
-      height: 600px;
-      overflow: hidden;
+    .product-showcase { 
+      position: relative; 
+      width: 100%; 
+      height: 600px; 
+      overflow: hidden; 
+      margin-bottom: 30px; /* Added 30px gap here */
     }
-
-    .product-showcase img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.6;
-    }
-
-    .showcase-text {
-      position: absolute;
-      top: 50%;
-      left: 60px;
-      transform: translateY(-50%);
-      color: var(--text-secondary);
-      max-width: 350px;
-      z-index: 10;
-    }
-
-    .showcase-brand {
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-
-    .showcase-brand span {
-      font-size: 12px;
-      display: block;
-      letter-spacing: 3px;
-      font-weight: 400;
-      color: var(--accent);
-      margin-top: 8px;
-    }
-
-    .showcase-tagline {
-      font-size: 22px;
-      font-weight: bold;
-      color: var(--text-primary);
-      margin-top: 20px;
-      margin-bottom: 15px;
-    }
-
-    .showcase-desc {
-      font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 25px;
-    }
+    .product-showcase img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+    .showcase-text { position: absolute; top: 50%; left: 60px; transform: translateY(-50%); color: var(--text-secondary); max-width: 350px; z-index: 10; }
+    
+    .showcase-brand { font-size: 40px; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--text-primary); line-height: 1; margin-bottom: 10px; }
+    .showcase-brand span { font-size: 12px; display: block; letter-spacing: 3px; font-weight: 400; color: var(--accent); margin-top: 8px; }
+    
+    .showcase-tagline { font-size: 22px; font-weight: bold; color: var(--text-primary); margin-top: 20px; margin-bottom: 15px; }
+    .showcase-desc { font-size: 14px; line-height: 1.8; margin-bottom: 25px; }
 
     /* ===== SPACER ===== */
-    .spacer {
-      width: 100%;
-      background: var(--bg-primary);
-      padding: 50px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .spacer img {
-      max-width: 100%;
-      height: auto;
-    }
+    .spacer { width: 100%; background: var(--bg-primary); padding: 50px 0; display: flex; justify-content: center; align-items: center; }
+    .spacer img { max-width: 100%; height: auto; }
 
     /* ===== VIDEO CONTAINER ===== */
-    #video-container {
-      height: 500vh;
-      position: relative;
-      background: var(--bg-primary);
-    }
-
-    #scroll-video {
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      object-fit: cover;
-      opacity: 0.8;
-    }
+    #video-container { height: 500vh; position: relative; background: var(--bg-primary); }
+    #scroll-video { position: sticky; top: 0; left: 0; width: 100%; height: 100vh; object-fit: cover; opacity: 0.8; }
 
     /* ===== GALLERY ===== */
-    .product-gallery-wrapper {
-      width: 100%;
-      height: 350px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 50px;
-      background: var(--bg-primary);
-      perspective: 1000px;
-    }
-
-    .gallery-item {
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-      transition: transform 0.2s ease-out, opacity 0.2s ease-out;
-      opacity: 0;
-      border: 1px solid #4A4A4A;
-    }
+    .product-gallery-wrapper { width: 100%; height: 350px; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; margin-bottom: 50px; background: var(--bg-primary); perspective: 1000px; }
+    .gallery-item { position: absolute; width: 220px; height: 220px; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); transition: transform 0.2s ease-out, opacity 0.2s ease-out; opacity: 0; border: 1px solid #4A4A4A; }
 
     /* ===== DIAL CONTROLS ===== */
-    .controls-wrapper {
-      position: relative;
-      width: 240px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: var(--bg-primary);
-      padding-bottom: 60px;
-    }
-
-    .lock-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-secondary);
-      margin-bottom: 15px;
-    }
-
-    .semicircle-dial {
-      width: 240px;
-      height: 120px;
-      position: relative;
-      overflow: hidden;
-      background: radial-gradient(circle at bottom, #4A4A4A 0%, #2a2a2a 70%, #111 100%);
-      border-radius: 120px 120px 0 0;
-      border: 1px solid var(--accent);
-      border-bottom: none;
-    }
-
-    .dial-marker {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 15px;
-      background: var(--accent);
-      border-radius: 0 0 4px 4px;
-      z-index: 10;
-    }
-
-    .dial-num {
-      position: absolute;
-      left: 50%;
-      bottom: 0px;
-      width: 40px;
-      height: 40px;
-      margin-left: -20px;
-      margin-bottom: -20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: var(--text-primary);
-      transition: transform 0.1s ease-out, opacity 0.1s ease-out;
-    }
-
-    .invisible-slider {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      cursor: grab;
-      z-index: 20;
-    }
-
-    .invisible-slider:active {
-      cursor: grabbing;
-    }
+    .controls-wrapper { position: relative; width: 240px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; background: var(--bg-primary); padding-bottom: 60px; }
+    .lock-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: var(--text-secondary); margin-bottom: 15px; }
+    .semicircle-dial { width: 240px; height: 120px; position: relative; overflow: hidden; background: radial-gradient(circle at bottom, #4A4A4A 0%, #2a2a2a 70%, #111 100%); border-radius: 120px 120px 0 0; border: 1px solid var(--accent); border-bottom: none; }
+    .dial-marker { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 15px; background: var(--accent); border-radius: 0 0 4px 4px; z-index: 10; }
+    .dial-num { position: absolute; left: 50%; bottom: 0px; width: 40px; height: 40px; margin-left: -20px; margin-bottom: -20px; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: bold; color: var(--text-primary); transition: transform 0.1s ease-out, opacity 0.1s ease-out; }
+    .invisible-slider { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: grab; z-index: 20; }
+    .invisible-slider:active { cursor: grabbing; }
 
     /* ===== EXPERIENCE SECTION ===== */
-    .silence-section {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      background: var(--bg-primary);
-    }
-
-    .silence-bg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.4);
-    }
-
-    .silence-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(15, 17, 21, 0.8) 0%, rgba(15, 17, 21, 0.4) 50%, rgba(15, 17, 21, 0.8) 100%);
-    }
-
-    .silence-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 0 80px;
-    }
-
-    .silence-headline {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 32px;
-    }
-
-    .silence-left {
-      font-size: clamp(36px, 5vw, 72px);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -1px;
-      color: var(--text-primary);
-      max-width: 45%;
-    }
-
-    .silence-desc {
-      position: absolute;
-      right: 80px;
-      transform: translateY(10px);
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      text-align: left;
-      max-width: 280px;
-    }
-
-    .silence-play-wrap {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .silence-play-label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      letter-spacing: 0.3px;
-      text-align: center;
-    }
-
-    .silence-play-label strong {
-      color: var(--text-primary);
-    }
+    .silence-section { position: relative; width: 100%; height: 100vh; overflow: hidden; display: flex; align-items: center; background: var(--bg-primary); }
+    .silence-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); }
+    .silence-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15, 17, 21, 0.8) 0%, rgba(15, 17, 21, 0.4) 50%, rgba(15, 17, 21, 0.8) 100%); }
+    .silence-content { position: relative; z-index: 2; width: 100%; padding: 0 80px; }
+    .silence-headline { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+    .silence-left { font-size: clamp(36px, 5vw, 72px); font-weight: 700; line-height: 1.1; letter-spacing: -1px; color: var(--text-primary); max-width: 45%; }
+    .silence-desc { position: absolute; right: 80px; transform: translateY(10px); font-size: 15px; color: var(--text-secondary); line-height: 1.8; text-align: left; max-width: 280px; }
+    .silence-play-wrap { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .silence-play-label { font-size: 14px; color: var(--text-secondary); letter-spacing: 0.3px; text-align: center; }
+    .silence-play-label strong { color: var(--text-primary); }
 
     /* ===== TECH SPECS ===== */
-    .specs-section {
-      padding: 120px 20px;
-      background: var(--bg-secondary);
-    }
-
-    .specs-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 5vw, 48px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      text-align: center;
-      margin-bottom: 80px;
-      color: var(--text-primary);
-    }
-
-    .specs-list {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .spec-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 32px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .spec-item:last-child {
-      border-bottom: none;
-    }
-
-    .spec-label {
-      font-size: 17px;
-      color: var(--text-secondary);
-      font-weight: 400;
-    }
-
-    .spec-value {
-      font-size: 17px;
-      color: var(--text-primary);
-      font-weight: 500;
-      text-align: right;
-    }
+    .specs-section { padding: 120px 20px; background: var(--bg-secondary); }
+    .specs-container { max-width: 800px; margin: 0 auto; }
+    .section-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1px; text-align: center; margin-bottom: 80px; color: var(--text-primary); }
+    .specs-list { display: flex; flex-direction: column; gap: 32px; }
+    .spec-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .spec-item:last-child { border-bottom: none; }
+    .spec-label { font-size: 17px; color: var(--text-secondary); font-weight: 400; }
+    .spec-value { font-size: 17px; color: var(--text-primary); font-weight: 500; text-align: right; }
 
     /* ===== CTA SECTION ===== */
-    .cta-section {
-      padding: 160px 20px;
-      background: var(--bg-primary);
-      text-align: center;
-      position: relative;
-    }
-
-    .cta-content {
-      max-width: 600px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .cta-content h2 {
-      font-size: clamp(40px, 6vw, 64px);
-      font-weight: 700;
-      letter-spacing: -1.5px;
-      margin-bottom: 24px;
-      line-height: 1.1;
-      color: var(--text-primary);
-    }
-
-    .cta-content p {
-      font-size: 19px;
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-    }
+    .cta-section { padding: 160px 20px; background: var(--bg-primary); text-align: center; position: relative; }
+    .cta-content { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+    .cta-content h2 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 24px; line-height: 1.1; color: var(--text-primary); }
+    .cta-content p { font-size: 19px; color: var(--text-secondary); margin-bottom: 40px; }
 
     /* ===== FOOTER ===== */
-    footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border);
-      padding: 60px 20px 40px;
-    }
+    footer { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 60px 20px 40px; }
+    .footer-container { max-width: 980px; margin: 0 auto; }
+    .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+    .footer-column h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 16px; text-transform: uppercase; color: var(--text-secondary); }
+    .footer-column ul { list-style: none; }
+    .footer-column li { margin-bottom: 8px; }
+    .footer-column a { color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: color 0.3s ease; }
+    .footer-column a:hover { color: var(--text-primary); }
+    .footer-bottom { padding-top: 20px; border-top: 1px solid var(--border); text-align: center; color: var(--text-secondary); font-size: 12px; }
 
-    .footer-container {
-      max-width: 980px;
-      margin: 0 auto;
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-column h4 {
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-    }
-
-    .footer-column ul {
-      list-style: none;
-    }
-
-    .footer-column li {
-      margin-bottom: 8px;
-    }
-
-    .footer-column a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 13px;
-      transition: color 0.3s ease;
-    }
-
-    .footer-column a:hover {
-      color: var(--text-primary);
-    }
-
-    .footer-bottom {
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 12px;
-    }
-
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-      header {
-        height: 60px;
-      }
-
-      .company-logo {
-        font-size: 24px;
-      }
-
-      .hero {
-        margin-top: 60px;
-        height: calc(100vh - 140px); /* 60px Header + 80px Sticky Bar */
-      }
-
-      .sticky-bar {
-        padding: 0 20px;
-      }
-
-      .sticky-launch {
-        display: none; /* Hide date on mobile to save space */
-      }
-
-      .product-name {
-        font-size: 32px;
-      }
-
-      .spec {
-        max-width: 200px;
-        font-size: 16px;
-      }
-
-      .left-spec {
-        left: 10px;
-      }
-
-      .right-spec {
-        right: 10px;
-        font-size: 20px;
-      }
-
-      .highlights-title {
-        font-size: 20px;
-      }
-
-      .slide {
-        height: 300px;
-      }
-
-      .showcase-text {
-        left: 20px;
-        max-width: 280px;
-      }
-
-      .showcase-brand {
-        font-size: 28px;
-      }
-
-      .silence-left {
-        font-size: 32px;
-      }
-
-      .silence-desc {
-        right: 20px;
-        max-width: 200px;
-      }
-
-      .spec-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .spec-value {
-        text-align: left;
-      }
-
-      .footer-content {
-        grid-template-columns: 1fr;
-      }
+      header { height: 60px; }
+      .company-logo { font-size: 24px; }
+      .hero { margin-top: 60px; height: calc(100vh - 140px); }
+      .sticky-bar { padding: 0 20px; }
+      .sticky-launch { display: none; }
+      .product-name { font-size: 32px; }
+      .spec { max-width: 200px; font-size: 16px; }
+      .left-spec { left: 10px; }
+      .right-spec { right: 10px; font-size: 20px; }
+      .showcase-text { left: 20px; max-width: 280px; }
+      .showcase-brand { font-size: 28px; }
+      .silence-left { font-size: 32px; }
+      .silence-desc { right: 20px; max-width: 200px; }
+      .spec-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .spec-value { text-align: left; }
     }
   </style>
 </head>
@@ -821,12 +295,10 @@
 
   <section class="hero">
     <img src="1st img.jpeg" alt="Hero Background">
-
     <div class="spec left-spec">
       <div class="intro-text">Introducing</div>
       <div class="product-name">Fresh Flow</div>
     </div>
-
     <div class="spec right-spec">
       Advanced Ceiling Fan Diffuser
     </div>
@@ -839,81 +311,76 @@
   </div>
 
   <section class="highlights">
-    <div class="highlights-title">Get the Highlights</div>
+    <div class="container mx-auto px-4 font-sans">
+      <div class="text-center mb-16">
+        <span class="text-blue-500 font-medium text-sm uppercase tracking-wider">Smart Features</span>
+        <h2 class="text-4xl md:text-5xl font-bold mt-4 text-[#FFFFE3]">
+          Control at Your<br />Fingertips
+        </h2>
+        <p class="text-[#CBCBCB] text-lg mt-4 max-w-2xl mx-auto">
+          Fresh-flow brings smart home technology to air care with intuitive controls and powerful features.
+        </p>
+      </div>
 
-    <div class="slider-wrapper">
-      <div class="slider-track" id="sliderTrack">
-        <div class="slide">
-          <img src="simple fan img.png" alt="Triple Tank System">
-          <div class="slide-text">
-            <h3>Triple Tank System</h3>
-            <p>Hold <span>sanitizer, fragrance, and room freshener</span> simultaneously.</p>
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="relative order-2 lg:order-1 flex justify-center">
+          <div class="w-64 h-[500px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-[3rem] p-3 shadow-2xl relative z-10">
+            <div class="w-full h-full bg-gradient-to-b from-gray-900 to-gray-950 rounded-[2.5rem] overflow-hidden relative border border-gray-800">
+              <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-20"></div>
+              <div id="phone-screen" class="pt-12 px-4 h-full text-white overflow-hidden">
+                </div>
+            </div>
           </div>
+          <div class="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full scale-75 z-0"></div>
         </div>
 
-        <div class="slide">
-          <img src="white fan .jpeg" alt="Piezo Technology">
-          <div class="slide-text">
-            <h3>Piezo Technology</h3>
-            <p>Advanced <span>ultrasonic misting</span> for ultra-fine particles.</p>
+        <div class="order-1 lg:order-2 grid sm:grid-cols-2 gap-4">
+          <div id="card-smartphone" onclick="switchFeature('smartphone')" onmouseenter="switchFeature('smartphone')" class="feature-card group cursor-pointer p-5 rounded-2xl transition-all duration-300 bg-blue-600 text-white shadow-lg shadow-blue-600/30">
+            <i data-lucide="smartphone" class="w-8 h-8 mb-3 text-white"></i>
+            <h3 class="text-lg font-semibold mb-1 text-white">Phone Control</h3>
+            <p class="text-sm leading-relaxed text-white/90">Control every aspect of Fresh-flow from your smartphone. Set schedules, adjust intensity, and monitor usage remotely.</p>
           </div>
-        </div>
-
-        <div class="slide">
-          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">⏱️</div>
-          <div class="slide-text">
-            <h3>1-Month Durability</h3>
-            <p><span>30 days</span> of continuous air freshening.</p>
+          <div id="card-schedule" onclick="switchFeature('schedule')" onmouseenter="switchFeature('schedule')" class="feature-card group cursor-pointer p-5 rounded-2xl transition-all duration-300 bg-[#1a1c23] hover:bg-[#1a1c23]/80 border border-[#6D8196]/20 text-[#CBCBCB]">
+            <i data-lucide="timer" class="w-8 h-8 mb-3 text-blue-500"></i>
+            <h3 class="text-lg font-semibold mb-1">Smart Scheduling</h3>
+            <p class="text-sm leading-relaxed text-[#CBCBCB]">Set custom sprinkle intervals or use our AI-optimized defaults. Perfect timing for different times of day.</p>
           </div>
-        </div>
-
-        <div class="slide">
-          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">🔄</div>
-          <div class="slide-text">
-            <h3>Easy Installation</h3>
-            <p>Mounts on any ceiling fan in <span>minutes</span>.</p>
+          <div id="card-power" onclick="switchFeature('power')" onmouseenter="switchFeature('power')" class="feature-card group cursor-pointer p-5 rounded-2xl transition-all duration-300 bg-[#1a1c23] hover:bg-[#1a1c23]/80 border border-[#6D8196]/20 text-[#CBCBCB]">
+            <i data-lucide="power" class="w-8 h-8 mb-3 text-blue-500"></i>
+            <h3 class="text-lg font-semibold mb-1">One-Tap Control</h3>
+            <p class="text-sm leading-relaxed text-[#CBCBCB]">Instantly turn sprinkle on or off with a single tap. Quick control when you need it most.</p>
           </div>
-        </div>
-
-        <div class="slide">
-          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">🎨</div>
-          <div class="slide-text">
-            <h3>Modern Design</h3>
-            <p><span>Sleek cylindrical</span> shape complements any décor.</p>
+          <div id="card-mesh" onclick="switchFeature('mesh')" onmouseenter="switchFeature('mesh')" class="feature-card group cursor-pointer p-5 rounded-2xl transition-all duration-300 bg-[#1a1c23] hover:bg-[#1a1c23]/80 border border-[#6D8196]/20 text-[#CBCBCB]">
+            <i data-lucide="network" class="w-8 h-8 mb-3 text-blue-500"></i>
+            <h3 class="text-lg font-semibold mb-1">MESH Technology</h3>
+            <p class="text-sm leading-relaxed text-[#CBCBCB]">Connect 10+ devices and control them all from one central hub. Perfect for hospitals and large offices.</p>
           </div>
-        </div>
-
-        <div class="slide">
-          <div style="width: 100%; height: 100%; background: #1a1c23; display: flex; align-items: center; justify-content: center; font-size: 80px;">💰</div>
-          <div class="slide-text">
-            <h3>Cost-Effective</h3>
-            <p>Affordable solution compared to <span>traditional diffusers</span>.</p>
+          <div id="card-energy" onclick="switchFeature('energy')" onmouseenter="switchFeature('energy')" class="feature-card group cursor-pointer p-5 rounded-2xl transition-all duration-300 bg-[#1a1c23] hover:bg-[#1a1c23]/80 border border-[#6D8196]/20 text-[#CBCBCB]">
+            <i data-lucide="zap" class="w-8 h-8 mb-3 text-blue-500"></i>
+            <h3 class="text-lg font-semibold mb-1">Energy Efficient</h3>
+            <p class="text-sm leading-relaxed text-[#CBCBCB]">Uses minimal power while providing maximum coverage. Works with your existing ceiling fan - no extra installation.</p>
+          </div>
+          <div id="card-customize" onclick="switchFeature('customize')" onmouseenter="switchFeature('customize')" class="feature-card group cursor-pointer p-5 rounded-2xl transition-all duration-300 bg-[#1a1c23] hover:bg-[#1a1c23]/80 border border-[#6D8196]/20 text-[#CBCBCB]">
+            <i data-lucide="settings" class="w-8 h-8 mb-3 text-blue-500"></i>
+            <h3 class="text-lg font-semibold mb-1">Customizable Solutions</h3>
+            <p class="text-sm leading-relaxed text-[#CBCBCB]">Three compartments for different solutions. Mix and match based on your needs - sanitation, fragrance, or mosquito control.</p>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="slider-controls">
-      <button class="play-btn" id="playBtn">▶</button>
-      <div class="progress-bars" id="progressBars"></div>
     </div>
   </section>
 
   <section class="product-showcase">
     <img src="chm spr.jpeg" alt="Product View">
-
     <div class="showcase-text">
       <div class="showcase-brand">
         Fresh Flow
         <span>YOUR AIR. MASTERED</span>
       </div>
-
       <div class="showcase-tagline">Transform Your Space</div>
-
       <div class="showcase-desc">
         FreshFlow intelligently distributes sanitizers, fragrances, and room fresheners using advanced piezo-plate technology. Experience perfect misting coverage with whisper-quiet operation.
       </div>
-
       <button onclick="alert('Thank you! Pre-order details coming soon.')">
         Pre-Order Now
       </button>
@@ -938,7 +405,6 @@
 
   <div class="controls-wrapper">
     <div class="lock-label">Swipe Dial to Rotate</div>
-
     <div class="semicircle-dial">
       <div class="dial-marker"></div>
       <div class="dial-num">1</div>
@@ -946,28 +412,23 @@
       <div class="dial-num">3</div>
       <div class="dial-num">4</div>
       <div class="dial-num">5</div>
-
       <input type="range" id="gallerySlider" min="0" max="4" step="0.01" value="2" class="invisible-slider">
     </div>
   </div>
 
   <section class="silence-section">
     <img src="prd lst.jpeg" alt="Product Detail" class="silence-bg">
-
     <div class="silence-overlay"></div>
-
     <div class="silence-content">
       <div class="silence-headline">
         <span class="silence-left">Experience the Future</span>
       </div>
-
       <div class="silence-desc">
         Advanced piezo technology creates<br>
         micro-fine mist distribution.<br>
         Your space, perfectly fresh.
       </div>
     </div>
-
     <div class="silence-play-wrap">
       <p class="silence-play-label">Ready to transform your home? <strong>Pre-order FreshFlow</strong></p>
       <button>Get Early Access</button>
@@ -1082,95 +543,155 @@
       });
     });
 
-    /* SLIDER */
-    const track = document.getElementById("sliderTrack");
-    const progressBarsContainer = document.getElementById("progressBars");
-    const playBtn = document.getElementById("playBtn");
+    /* SMART FEATURES LOGIC */
+    const screensHtml = {
+      smartphone: `
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium">Fresh-flow</span>
+            <span class="text-xs text-green-400">Connected</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="bg-white/10 rounded-lg p-2 text-center">
+              <div class="w-6 h-6 rounded-full bg-green-400 mx-auto mb-1"></div>
+              <span class="text-xs">Sanitize</span>
+            </div>
+            <div class="bg-white/10 rounded-lg p-2 text-center">
+              <div class="w-6 h-6 rounded-full bg-cyan-400 mx-auto mb-1"></div>
+              <span class="text-xs">Fresh</span>
+            </div>
+            <div class="bg-white/10 rounded-lg p-2 text-center">
+              <div class="w-6 h-6 rounded-full bg-orange-400 mx-auto mb-1"></div>
+              <span class="text-xs">Repel</span>
+            </div>
+          </div>
+        </div>
+      `,
+      schedule: `
+        <div class="space-y-3">
+          <span class="text-sm font-medium">Schedule</span>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between bg-white/10 rounded-lg p-2">
+              <span class="text-xs">Morning</span>
+              <div class="w-8 h-4 bg-blue-500 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+            </div>
+            <div class="flex items-center justify-between bg-white/10 rounded-lg p-2">
+              <span class="text-xs">Afternoon</span>
+              <div class="w-8 h-4 bg-blue-500 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+            </div>
+            <div class="flex items-center justify-between bg-white/10 rounded-lg p-2">
+              <span class="text-xs">Evening</span>
+              <div class="w-8 h-4 bg-blue-500 rounded-full relative"><div class="absolute right-0.5 top-0.5 w-3 h-3 bg-white rounded-full"></div></div>
+            </div>
+          </div>
+        </div>
+      `,
+      power: `
+        <div class="flex flex-col items-center justify-center h-full pb-8">
+          <div class="anim-pulse-scale w-20 h-20 rounded-full bg-blue-500 flex items-center justify-center mb-3">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 11-12.728 0M12 3v9"></path></svg>
+          </div>
+          <span class="text-sm font-medium">Tap to Toggle</span>
+        </div>
+      `,
+      mesh: `
+        <div class="space-y-3">
+          <span class="text-sm font-medium">MESH Network</span>
+          <div class="grid grid-cols-3 gap-2 mt-4">
+            ${Array.from({length: 9}).map((_, i) => `<div class="w-6 h-6 rounded-full bg-blue-500/80 mx-auto anim-fade-pulse" style="animation-delay: ${i * 0.2}s"></div>`).join('')}
+          </div>
+          <span class="text-xs text-center block text-gray-400 mt-4">9 devices connected</span>
+        </div>
+      `,
+      energy: `
+        <div class="space-y-3">
+          <span class="text-sm font-medium">Power Usage</span>
+          <div class="flex items-end gap-1 h-24 mt-4">
+            ${[30, 45, 25, 55, 35, 40, 30].map((h, i) => `<div class="flex-1 bg-blue-500/80 rounded-t anim-bar-grow" style="height: ${h}%; animation-delay: ${i * 0.1}s"></div>`).join('')}
+          </div>
+          <span class="text-xs text-center block text-green-400 mt-2">Only 5W average</span>
+        </div>
+      `,
+      customize: `
+        <div class="space-y-3">
+          <span class="text-sm font-medium">Solution Mix</span>
+          <div class="space-y-4 mt-4">
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span>Sanitation</span><span>70%</span></div>
+              <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-green-400 rounded-full anim-width-grow" style="width: 70%;"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span>Fragrance</span><span>20%</span></div>
+              <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-cyan-400 rounded-full anim-width-grow" style="width: 20%; animation-delay: 0.2s"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-xs mb-1"><span>Mosquito</span><span>10%</span></div>
+              <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div class="h-full bg-orange-400 rounded-full anim-width-grow" style="width: 10%; animation-delay: 0.4s"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    };
 
-    const slides = track.querySelectorAll(".slide");
-    const totalSlides = slides.length;
-    const slideDuration = 4000;
+    function switchFeature(feature) {
+      // 1. Update the Phone Screen
+      document.getElementById('phone-screen').innerHTML = screensHtml[feature];
 
-    let slideWidth = slides[0].getBoundingClientRect().width;
-    window.addEventListener('resize', () => {
-      slideWidth = slides[0].getBoundingClientRect().width;
-      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-    });
-
-    let currentSlide = 0;
-    let isPlaying = true;
-    let progressInterval = null;
-    let progressValue = 0;
-
-    slides.forEach((_, i) => {
-      const bar = document.createElement("div");
-      bar.classList.add("progress-bar");
-      const fill = document.createElement("div");
-      fill.classList.add("fill");
-      bar.appendChild(fill);
-      bar.addEventListener("click", () => goToSlide(i));
-      progressBarsContainer.appendChild(bar);
-    });
-
-    const bars = progressBarsContainer.querySelectorAll(".progress-bar");
-
-    function goToSlide(index) {
-      currentSlide = index;
-      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-      resetProgress();
-      updateBars();
-      if (isPlaying) startProgress();
-    }
-
-    function updateBars() {
-      bars.forEach((bar, i) => {
-        bar.classList.toggle("active", i === currentSlide);
+      // 2. Reset all cards to default (inactive) state
+      const cards = document.querySelectorAll('.feature-card');
+      cards.forEach(card => {
+        card.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+        card.classList.add('bg-[#1a1c23]', 'hover:bg-[#1a1c23]/80', 'text-[#CBCBCB]');
+        
+        const icon = card.querySelector('i');
+        if(icon) {
+          icon.classList.remove('text-white');
+          icon.classList.add('text-blue-500');
+        }
+        
+        const title = card.querySelector('h3');
+        if(title) title.classList.remove('text-white');
+        
+        const desc = card.querySelector('p');
+        if(desc) {
+          desc.classList.remove('text-white/90');
+          desc.classList.add('text-[#CBCBCB]');
+        }
       });
-    }
 
-    function resetProgress() {
-      clearInterval(progressInterval);
-      progressValue = 0;
-      if (bars[currentSlide]) {
-        bars[currentSlide].querySelector(".fill").style.width = "0%";
+      // 3. Highlight the Active Card
+      const activeCard = document.getElementById('card-' + feature);
+      if(activeCard) {
+        activeCard.classList.remove('bg-[#1a1c23]', 'hover:bg-[#1a1c23]/80', 'text-[#CBCBCB]');
+        activeCard.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+
+        const activeIcon = activeCard.querySelector('i');
+        if(activeIcon) {
+          activeIcon.classList.remove('text-blue-500');
+          activeIcon.classList.add('text-white');
+        }
+        
+        const activeTitle = activeCard.querySelector('h3');
+        if(activeTitle) activeTitle.classList.add('text-white');
+        
+        const activeDesc = activeCard.querySelector('p');
+        if(activeDesc) {
+          activeDesc.classList.remove('text-[#CBCBCB]');
+          activeDesc.classList.add('text-white/90');
+        }
       }
     }
 
-    function startProgress() {
-      resetProgress();
-      const steps = slideDuration / 50;
-      const increment = 100 / steps;
+    // Initialize the first feature screen and generate Lucide icons
+    switchFeature('smartphone');
+    lucide.createIcons();
 
-      progressInterval = setInterval(() => {
-        progressValue += increment;
-        if (bars[currentSlide]) {
-          bars[currentSlide].querySelector(".fill").style.width = progressValue + "%";
-        }
-        if (progressValue >= 100) {
-          clearInterval(progressInterval);
-          currentSlide = (currentSlide + 1) % totalSlides;
-          track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
-          updateBars();
-          if (isPlaying) startProgress();
-        }
-      }, 50);
-    }
-
-    playBtn.addEventListener("click", () => {
-      if (isPlaying) {
-        isPlaying = false;
-        clearInterval(progressInterval);
-        playBtn.innerHTML = "▶";
-      } else {
-        isPlaying = true;
-        playBtn.innerHTML = "⏸";
-        startProgress();
-      }
-    });
-
-    updateBars();
-    startProgress();
-    playBtn.innerHTML = "⏸";
 
     /* GALLERY */
     const items = document.querySelectorAll('.gallery-item');
