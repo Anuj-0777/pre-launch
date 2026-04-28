@@ -14,7 +14,7 @@
       box-sizing: border-box;
     }
 
-    :root {M
+    :root {
       --bg-primary: #0f1115;
       --bg-secondary: #1a1c23;
       --text-primary: #FFFFE3;
@@ -1063,199 +1063,163 @@
     </div>
   </footer>
 
- <script>
-/* =========================
-   SCROLL VIDEO (FIXED)
-========================= */
-const video = document.getElementById('scroll-video');
-const videoContainer = document.getElementById('video-container');
+  <script>
+    /* VIDEO SCROLL */
+    const video = document.getElementById('scroll-video');
+    const videoContainer = document.getElementById('video-container');
 
-if (video && videoContainer) {
-  video.addEventListener('loadeddata', () => {
-    video.pause();
-
-    window.addEventListener('scroll', () => {
-      const rect = videoContainer.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Smooth progress calculation
-      let progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-      progress = Math.max(0, Math.min(1, progress));
-
-      if (video.duration && !isNaN(video.duration)) {
-        video.currentTime = progress * video.duration;
-      }
+    video.addEventListener('loadedmetadata', () => {
+      window.addEventListener('scroll', () => {
+        const containerTop = videoContainer.offsetTop;
+        const containerHeight = videoContainer.offsetHeight;
+        const windowHeight = window.innerHeight;
+        let scrolledDistance = window.scrollY - containerTop;
+        const maxScrollableDistance = containerHeight - windowHeight;
+        let scrollPercentage = scrolledDistance / maxScrollableDistance;
+        if (scrollPercentage < 0) scrollPercentage = 0;
+        if (scrollPercentage > 1) scrollPercentage = 1;
+        video.currentTime = scrollPercentage * video.duration;
+      });
     });
-  });
-}
 
-/* =========================
-   SLIDER (CLEAN VERSION)
-========================= */
-const track = document.getElementById("sliderTrack");
-const progressBarsContainer = document.getElementById("progressBars");
-const playBtn = document.getElementById("playBtn");
+    /* SLIDER */
+    const track = document.getElementById("sliderTrack");
+    const progressBarsContainer = document.getElementById("progressBars");
+    const playBtn = document.getElementById("playBtn");
 
-if (track && progressBarsContainer && playBtn) {
-  const slides = track.querySelectorAll(".slide");
-  const totalSlides = slides.length;
-  const slideDuration = 4000;
+    const slides = track.querySelectorAll(".slide");
+    const totalSlides = slides.length;
+    const slideDuration = 4000;
 
-  let currentSlide = 0;
-  let isPlaying = true;
-  let progressInterval = null;
-  let progressValue = 0;
-
-  let slideWidth = slides[0].getBoundingClientRect().width;
-
-  window.addEventListener('resize', () => {
-    slideWidth = slides[0].getBoundingClientRect().width;
-    moveToSlide(currentSlide);
-  });
-
-  // Create progress bars
-  slides.forEach((_, i) => {
-    const bar = document.createElement("div");
-    bar.classList.add("progress-bar");
-
-    const fill = document.createElement("div");
-    fill.classList.add("fill");
-
-    bar.appendChild(fill);
-    bar.addEventListener("click", () => goToSlide(i));
-
-    progressBarsContainer.appendChild(bar);
-  });
-
-  const bars = progressBarsContainer.querySelectorAll(".progress-bar");
-
-  function moveToSlide(index) {
-    track.style.transform = `translateX(-${index * slideWidth}px)`;
-  }
-
-  function goToSlide(index) {
-    currentSlide = index;
-    moveToSlide(currentSlide);
-    resetProgress();
-    updateBars();
-    if (isPlaying) startProgress();
-  }
-
-  function updateBars() {
-    bars.forEach((bar, i) => {
-      bar.classList.toggle("active", i === currentSlide);
+    let slideWidth = slides[0].getBoundingClientRect().width;
+    window.addEventListener('resize', () => {
+      slideWidth = slides[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
     });
-  }
 
-  function resetProgress() {
-    clearInterval(progressInterval);
-    progressValue = 0;
+    let currentSlide = 0;
+    let isPlaying = true;
+    let progressInterval = null;
+    let progressValue = 0;
 
-    if (bars[currentSlide]) {
-      bars[currentSlide].querySelector(".fill").style.width = "0%";
+    slides.forEach((_, i) => {
+      const bar = document.createElement("div");
+      bar.classList.add("progress-bar");
+      const fill = document.createElement("div");
+      fill.classList.add("fill");
+      bar.appendChild(fill);
+      bar.addEventListener("click", () => goToSlide(i));
+      progressBarsContainer.appendChild(bar);
+    });
+
+    const bars = progressBarsContainer.querySelectorAll(".progress-bar");
+
+    function goToSlide(index) {
+      currentSlide = index;
+      track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+      resetProgress();
+      updateBars();
+      if (isPlaying) startProgress();
     }
-  }
 
-  function startProgress() {
-    resetProgress();
+    function updateBars() {
+      bars.forEach((bar, i) => {
+        bar.classList.toggle("active", i === currentSlide);
+      });
+    }
 
-    const steps = slideDuration / 50;
-    const increment = 100 / steps;
-
-    progressInterval = setInterval(() => {
-      progressValue += increment;
-
-      if (bars[currentSlide]) {
-        bars[currentSlide].querySelector(".fill").style.width = progressValue + "%";
-      }
-
-      if (progressValue >= 100) {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        moveToSlide(currentSlide);
-        updateBars();
-        if (isPlaying) startProgress();
-      }
-    }, 50);
-  }
-
-  playBtn.addEventListener("click", () => {
-    isPlaying = !isPlaying;
-
-    if (isPlaying) {
-      playBtn.innerHTML = "⏸";
-      startProgress();
-    } else {
-      playBtn.innerHTML = "▶";
+    function resetProgress() {
       clearInterval(progressInterval);
+      progressValue = 0;
+      if (bars[currentSlide]) {
+        bars[currentSlide].querySelector(".fill").style.width = "0%";
+      }
     }
-  });
 
-  updateBars();
-  startProgress();
-  playBtn.innerHTML = "⏸";
-}
+    function startProgress() {
+      resetProgress();
+      const steps = slideDuration / 50;
+      const increment = 100 / steps;
 
-/* =========================
-   GALLERY + DIAL (SMOOTH)
-========================= */
-const items = document.querySelectorAll('.gallery-item');
-const numbers = document.querySelectorAll('.dial-num');
-const slider = document.getElementById('gallerySlider');
+      progressInterval = setInterval(() => {
+        progressValue += increment;
+        if (bars[currentSlide]) {
+          bars[currentSlide].querySelector(".fill").style.width = progressValue + "%";
+        }
+        if (progressValue >= 100) {
+          clearInterval(progressInterval);
+          currentSlide = (currentSlide + 1) % totalSlides;
+          track.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+          updateBars();
+          if (isPlaying) startProgress();
+        }
+      }, 50);
+    }
 
-if (items.length && slider) {
-  slider.max = items.length - 1;
-  slider.value = Math.floor(items.length / 2);
-
-  function updateGallery(position) {
-    items.forEach((item, index) => {
-      const offset = index - position;
-      const absOffset = Math.abs(offset);
-
-      const x = offset * 130;
-      const z = 50 - absOffset * 80;
-      const scale = Math.max(0.7, 1.2 - absOffset * 0.3);
-      const opacity = Math.max(0.3, 1 - absOffset * 0.6);
-
-      let rotate = offset * 25;
-      rotate = Math.max(-30, Math.min(30, rotate));
-
-      item.style.transform = `
-        translateX(${x}px)
-        translateZ(${z}px)
-        scale(${scale})
-        rotateY(${rotate}deg)
-      `;
-      item.style.opacity = opacity;
-      item.style.zIndex = 10 - absOffset;
+    playBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        isPlaying = false;
+        clearInterval(progressInterval);
+        playBtn.innerHTML = "▶";
+      } else {
+        isPlaying = true;
+        playBtn.innerHTML = "⏸";
+        startProgress();
+      }
     });
 
-    numbers.forEach((num, index) => {
-      const offset = index - position;
-      const angle = offset * 35;
+    updateBars();
+    startProgress();
+    playBtn.innerHTML = "⏸";
 
-      num.style.transform = `
-        rotate(${angle}deg)
-        translateY(-95px)
-        rotate(${-angle}deg)
-      `;
+    /* GALLERY */
+    const items = document.querySelectorAll('.gallery-item');
+    const numbers = document.querySelectorAll('.dial-num');
+    const slider = document.getElementById('gallerySlider');
 
-      num.style.opacity = Math.max(0, 1 - Math.abs(offset) * 0.5);
+    slider.max = items.length - 1;
+    slider.value = Math.floor(items.length / 2);
+
+    function updateGalleryAndDial(position) {
+      items.forEach((item, index) => {
+        const offset = index - position;
+        const absOffset = Math.abs(offset);
+
+        const xPosition = offset * 130;
+        const zPosition = 50 - (absOffset * 80);
+        const scale = Math.max(0.7, 1.2 - (absOffset * 0.3));
+        const opacity = Math.max(0.3, 1 - (absOffset * 0.6));
+
+        let rotation = offset * 25;
+        if (rotation > 30) rotation = 30;
+        if (rotation < -30) rotation = -30;
+
+        item.style.transform = `translateX(${xPosition}px) translateZ(${zPosition}px) scale(${scale}) rotateY(${rotation}deg)`;
+        item.style.opacity = opacity;
+        item.style.zIndex = Math.round(10 - absOffset);
+      });
+
+      numbers.forEach((num, index) => {
+        const offset = index - position;
+        const angle = offset * 35;
+        num.style.transform = `rotate(${angle}deg) translateY(-95px) rotate(${-angle}deg)`;
+        const absOffset = Math.abs(offset);
+        num.style.opacity = Math.max(0, 1 - (absOffset * 0.5));
+      });
+    }
+
+    updateGalleryAndDial(parseFloat(slider.value));
+
+    slider.addEventListener('input', (e) => {
+      updateGalleryAndDial(parseFloat(e.target.value));
     });
-  }
 
-  updateGallery(parseFloat(slider.value));
-
-  slider.addEventListener('input', (e) => {
-    updateGallery(parseFloat(e.target.value));
-  });
-
-  slider.addEventListener('change', (e) => {
-    const nearest = Math.round(parseFloat(e.target.value));
-    slider.value = nearest;
-    updateGallery(nearest);
-  });
-}
-</script>
+    slider.addEventListener('change', (e) => {
+      const nearestImageIndex = Math.round(parseFloat(e.target.value));
+      slider.value = nearestImageIndex;
+      updateGalleryAndDial(nearestImageIndex);
+    });
+  </script>
 
 </body>
 </html>
