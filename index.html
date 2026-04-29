@@ -241,15 +241,83 @@
     .silence-play-label strong { color: var(--text-primary); }
 
     /* ===== TECH SPECS ===== */
-    .specs-section { padding: 120px 20px; background: var(--bg-secondary); }
-    .specs-container { max-width: 800px; margin: 0 auto; }
-    .section-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1px; text-align: center; margin-bottom: 80px; color: var(--text-primary); }
-    .specs-list { display: flex; flex-direction: column; gap: 32px; }
-    .spec-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-    .spec-item:last-child { border-bottom: none; }
-    .spec-label { font-size: 17px; color: var(--text-secondary); font-weight: 400; }
-    .spec-value { font-size: 17px; color: var(--text-primary); font-weight: 500; text-align: right; }
+   /* ===== TECH SPECS (GRID LAYOUT) ===== */
+    .specs-section {
+      padding: 120px 20px;
+      background: var(--bg-secondary);
+      position: relative;
+    }
 
+    .specs-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      text-align: center;
+      margin-bottom: 60px;
+      color: var(--text-primary);
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .spec-card {
+      background: rgba(20, 22, 26, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .spec-card:hover {
+      /* Changes the border to a bright electric blue */
+      border-color: #4facfe; 
+      transform: translateY(-5px);
+      background: rgba(30, 34, 42, 0.8);
+      
+      /* This is the magic! It creates a layered outer glow and a soft inner glow */
+      box-shadow: 
+        0 0 30px rgba(79, 172, 254, 0.5),   /* Big soft outer blue glow */
+        0 0 10px rgba(79, 172, 254, 0.8),   /* Sharp, intense outer blue glow */
+        inset 0 0 15px rgba(79, 172, 254, 0.15); /* Soft inner blue glow */
+    }
+
+    .spec-icon {
+      font-size: 32px;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .spec-label {
+      font-size: 13px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .spec-value {
+      font-size: 20px;
+      color: var(--text-primary);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Remove the old mobile overrides for .spec-item since the grid handles it automatically! */
     /* ===== CTA SECTION ===== */
     .cta-section { padding: 160px 20px; background: var(--bg-primary); text-align: center; position: relative; }
     .cta-content { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
@@ -435,38 +503,54 @@
     </div>
   </section>
 
+  <!-- TECH SPECS -->
   <section class="specs-section">
     <div class="specs-container">
       <h2 class="section-title">Tech Specs</h2>
-      <div class="specs-list">
-        <div class="spec-item">
-          <span class="spec-label">Technology</span>
-          <span class="spec-value">Piezo Ultrasonic Misting</span>
+      <div class="specs-grid">
+        
+        <div class="spec-card">
+          <div class="spec-icon">🌊</div>
+          <div class="spec-label">Technology</div>
+          <div class="spec-value">Piezo Ultrasonic Misting</div>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Tank Capacity</span>
-          <span class="spec-value">Triple 100ml Tanks</span>
+
+        <div class="spec-card">
+          <div class="spec-icon">💧</div>
+          <div class="spec-label">Tank Capacity</div>
+          <div class="spec-value">Triple 100ml Tanks</div>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Duration</span>
-          <span class="spec-value">30 Days Continuous</span>
+
+        <div class="spec-card">
+          <div class="spec-icon">⏳</div>
+          <div class="spec-label">Duration</div>
+          <div class="spec-value">30 Days Continuous</div>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Installation</span>
-          <span class="spec-value">Universal Ceiling Fan Mount</span>
+
+        <div class="spec-card">
+          <div class="spec-icon">⚙️</div>
+          <div class="spec-label">Installation</div>
+          <div class="spec-value">Universal Ceiling Fan Mount</div>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Power</span>
-          <span class="spec-value">Low Energy Consumption</span>
+
+        <div class="spec-card">
+          <div class="spec-icon">⚡</div>
+          <div class="spec-label">Power</div>
+          <div class="spec-value">Low Energy Consumption</div>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Operation</span>
-          <span class="spec-value">Whisper-Quiet Performance</span>
+
+        <div class="spec-card">
+          <div class="spec-icon">🤫</div>
+          <div class="spec-label">Operation</div>
+          <div class="spec-value">Whisper-Quiet Performance</div>
         </div>
-        <div class="spec-item">
-          <span class="spec-label">Design</span>
-          <span class="spec-value">Sleek Cylindrical Form</span>
+
+        <div class="spec-card" style="grid-column: 1 / -1; align-items: center; text-align: center;">
+          <div class="spec-icon">✨</div>
+          <div class="spec-label">Design</div>
+          <div class="spec-value">Sleek Cylindrical Form factor crafted to blend into modern ceilings seamlessly.</div>
         </div>
+
       </div>
     </div>
   </section>
