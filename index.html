@@ -12,7 +12,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     tailwind.config = {
-      corePlugins: { preflight: false } // Prevents Tailwind from breaking your existing CSS
+      corePlugins: { preflight: false } 
     }
   </script>
 
@@ -37,6 +37,176 @@
       overflow-x: hidden;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== LOOPING MEDIA CAROUSEL (UPGRADED) ===== */
+    .media-carousel-section {
+      padding: 100px 20px;
+      background: var(--bg-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0px; 
+    }
+
+    .carousel-viewport {
+      width: 100%;
+      height: 80vh;
+      min-height: 500px;
+      border-radius: 24px; 
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); 
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none; 
+      -ms-overflow-style: none; 
+      cursor: grab; 
+    }
+
+    .carousel-viewport:active {
+      cursor: grabbing;
+    }
+
+    .carousel-viewport::-webkit-scrollbar {
+      display: none; 
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%; 
+      height: 100%;
+      scroll-snap-align: center; 
+      position: relative;
+      overflow: hidden; 
+    }
+
+    .carousel-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 17, 21, 0.9) 0%, rgba(15, 17, 21, 0.4) 40%, transparent 100%);
+      pointer-events: none; 
+    }
+
+    .carousel-slide img,
+    .carousel-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .carousel-slide:hover img,
+    .carousel-slide:hover video {
+      transform: scale(1.03);
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 60px;
+      left: 60px;
+      right: 60px;
+      z-index: 10;
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .carousel-slide.is-active .carousel-caption {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .carousel-caption h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      color: var(--text-primary);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .carousel-caption p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 450px;
+      line-height: 1.5;
+    }
+
+    .carousel-glass-wrapper {
+      background: rgba(30, 34, 42, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50px;
+      padding: 12px 24px;
+      width: 90%;
+      max-width: 600px;
+      transform: translateY(-50%); 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      z-index: 20;
+    }
+
+    .carousel-controls {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .carousel-play-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .carousel-play-btn:hover {
+      background: var(--text-primary);
+      color: var(--bg-primary);
+      transform: scale(1.1);
+    }
+
+    .carousel-progress-wrapper {
+      display: flex;
+      gap: 12px;
+      flex: 1; 
+      align-items: center; 
+    }
+
+    .carousel-bar {
+      width: 8px;
+      height: 8px;
+      background: rgba(109, 129, 150, 0.4); 
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); 
+      cursor: pointer; 
+    }
+
+    .carousel-bar.active {
+      width: 50%; 
+      background: rgba(109, 129, 150, 0.2); 
+    }
+
+    .carousel-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(109, 129, 150, 0.5); 
     }
 
     /* ===== HEADER ===== */
@@ -160,7 +330,6 @@
       position: relative;
     }
 
-    /* Framer Motion Alternative Animations (CSS) */
     @keyframes pulseScale { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
     @keyframes fadePulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
     @keyframes barGrow { from { height: 0; } }
@@ -196,7 +365,7 @@
       width: 100%; 
       height: 600px; 
       overflow: hidden; 
-      margin-bottom: 30px; /* Added 30px gap here */
+      margin-bottom: 30px; 
     }
     .product-showcase img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
     .showcase-text { position: absolute; top: 50%; left: 60px; transform: translateY(-50%); color: var(--text-secondary); max-width: 350px; z-index: 10; }
@@ -240,84 +409,27 @@
     .silence-play-label { font-size: 14px; color: var(--text-secondary); letter-spacing: 0.3px; text-align: center; }
     .silence-play-label strong { color: var(--text-primary); }
 
-    /* ===== TECH SPECS ===== */
-   /* ===== TECH SPECS (GRID LAYOUT) ===== */
-    .specs-section {
-      padding: 120px 20px;
-      background: var(--bg-secondary);
-      position: relative;
-    }
-
-    .specs-container {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-size: clamp(32px, 5vw, 48px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      text-align: center;
-      margin-bottom: 60px;
-      color: var(--text-primary);
-    }
-
-    .specs-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .spec-card {
-      background: rgba(20, 22, 26, 0.4);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px 24px;
-      display: flex;
-      flex-direction: column;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      backdrop-filter: blur(10px);
-    }
+    /* ===== TECH SPECS (GRID LAYOUT) ===== */
+    .specs-section { padding: 120px 20px; background: var(--bg-secondary); position: relative; }
+    .specs-container { max-width: 1000px; margin: 0 auto; }
+    .section-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -1px; text-align: center; margin-bottom: 60px; color: var(--text-primary);}
+    .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .spec-card { background: rgba(20, 22, 26, 0.4); border: 1px solid var(--border); border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);  backdrop-filter: blur(10px); }
 
     .spec-card:hover {
-      /* Changes the border to a bright electric blue */
       border-color: #4facfe; 
       transform: translateY(-5px);
       background: rgba(30, 34, 42, 0.8);
-      
-      /* This is the magic! It creates a layered outer glow and a soft inner glow */
       box-shadow: 
-        0 0 30px rgba(79, 172, 254, 0.5),   /* Big soft outer blue glow */
-        0 0 10px rgba(79, 172, 254, 0.8),   /* Sharp, intense outer blue glow */
-        inset 0 0 15px rgba(79, 172, 254, 0.15); /* Soft inner blue glow */
+        0 0 30px rgba(79, 172, 254, 0.5),   
+        0 0 10px rgba(79, 172, 254, 0.8),   
+        inset 0 0 15px rgba(79, 172, 254, 0.15); 
     }
 
-    .spec-icon {
-      font-size: 32px;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-    }
+    .spec-icon { font-size: 32px; margin-bottom: 20px; background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+    .spec-label { font-size: 13px; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 8px; }
+    .spec-value { font-size: 20px; color: var(--text-primary); font-weight: 500; line-height: 1.4; }
 
-    .spec-label {
-      font-size: 13px;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .spec-value {
-      font-size: 20px;
-      color: var(--text-primary);
-      font-weight: 500;
-      line-height: 1.4;
-    }
-
-    /* Remove the old mobile overrides for .spec-item since the grid handles it automatically! */
     /* ===== CTA SECTION ===== */
     .cta-section { padding: 160px 20px; background: var(--bg-primary); text-align: center; position: relative; }
     .cta-content { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
@@ -335,6 +447,44 @@
     .footer-column a:hover { color: var(--text-primary); }
     .footer-bottom { padding-top: 20px; border-top: 1px solid var(--border); text-align: center; color: var(--text-secondary); font-size: 12px; }
 
+    /* ===== ADDED: ELEVATOR NAVIGATION BUTTONS CSS ===== */
+    .floating-nav-btn {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(30, 34, 42, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--accent);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 9999;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      padding: 0; 
+    }
+
+    .floating-nav-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .floating-nav-btn:hover {
+      background: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      border-color: #fff;
+    }
+
     @media (max-width: 768px) {
       header { height: 60px; }
       .company-logo { font-size: 24px; }
@@ -351,11 +501,44 @@
       .silence-desc { right: 20px; max-width: 200px; }
       .spec-item { flex-direction: column; align-items: flex-start; gap: 8px; }
       .spec-value { text-align: left; }
+      
+      .carousel-caption { left: 20px; right: 20px; bottom: 30px; }
+      .carousel-caption h3 { font-size: 28px; }
+      .carousel-caption p { font-size: 14px; }
+      .carousel-glass-wrapper { width: 85%; }
+      .floating-nav-btn { bottom: 20px; right: 20px; width: 48px; height: 48px; }
+    }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px; /* Very thin and elegant */
+      background: rgba(255, 255, 255, 0.05); /* Barely visible track */
+      z-index: 9999; /* Must be higher than the header (1000) */
+      pointer-events: none; /* So it doesn't block clicks */
+    }
+
+    .scroll-progress-bar {
+      height: 100%;
+      width: 0%; /* Starts at 0, JS will update this */
+      background: var(--accent);
+      /* Optional: Add a slight glow */
+      box-shadow: 0 0 10px rgba(109, 129, 150, 0.8);
+      /* Smooth out the scrolling visually */
+      transition: width 0.1s ease-out; 
     }
   </style>
 </head>
 
 <body>
+
+  <!-- ===== SCROLL PROGRESS BAR ===== -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  </div>
 
   <header>
     <div class="company-logo">TECHTOTEM</div>
@@ -377,6 +560,55 @@
     <div class="sticky-launch">Launching 15th October 2026</div>
     <button onclick="alert('Pre-order registration opening soon!')">Pre-Book Now</button>
   </div>
+
+  <!-- ===== LOOPING MEDIA CAROUSEL (UPGRADED) ===== -->
+  <section class="media-carousel-section">
+    
+    <div class="carousel-viewport" id="carouselViewport">
+      <div class="carousel-slide">
+        <img src="simple fan img.png" alt="Highlight 1">
+        <div class="carousel-caption">
+          <h3>The Triple Tank</h3>
+          <p>Seamlessly hold sanitizer, fragrance, and mosquito repellent at the exact same time.</p>
+        </div>
+      </div>
+      
+      <div class="carousel-slide">
+        <!-- Note: Ensure v-1.mp4 is in your folder -->
+        <video src="v-1.mp4" muted playsinline loop></video>
+        <div class="carousel-caption">
+          <h3>Whisper Quiet</h3>
+          <p>Advanced aerodynamic engineering ensures perfectly silent operation while you sleep.</p>
+        </div>
+      </div>
+
+      <div class="carousel-slide">
+        <img src="white fan .jpeg" alt="Highlight 3">
+        <div class="carousel-caption">
+          <h3>Piezo Precision</h3>
+          <p>Ultrasonic technology generates a micron-level mist for maximum room coverage.</p>
+        </div>
+      </div>
+
+      <div class="carousel-slide">
+        <img src="prd lst.jpeg" alt="Highlight 4">
+        <div class="carousel-caption">
+          <h3>Sleek Integration</h3>
+          <p>A beautiful, modern aesthetic designed to upgrade the look of any standard ceiling fan.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-glass-wrapper">
+      <div class="carousel-controls">
+        <button class="carousel-play-btn" id="carouselPlayBtn">⏸</button>
+        <div class="carousel-progress-wrapper" id="carouselProgressWrapper">
+          <!-- JavaScript will automatically inject the progress bars here -->
+        </div>
+      </div>
+    </div>
+
+  </section>
 
   <section class="highlights">
     <div class="container mx-auto px-4 font-sans">
@@ -438,7 +670,8 @@
     </div>
   </section>
 
-  <section class="product-showcase">
+  <!-- Added ID 'pre-video-section' to scroll to BEFORE the video -->
+  <section class="product-showcase" id="pre-video-section">
     <img src="chm spr.jpeg" alt="Product View">
     <div class="showcase-text">
       <div class="showcase-brand">
@@ -459,7 +692,8 @@
     <video id="scroll-video" src="v-1.mp4" muted playsinline preload="auto"></video>
   </div>
 
-  <div class="spacer">
+  <!-- Added ID 'post-video-section' to scroll to BELOW the video -->
+  <div class="spacer" id="post-video-section">
     <img src="bottle.png" alt="Bottle Storage">
   </div>
 
@@ -503,54 +737,45 @@
     </div>
   </section>
 
-  <!-- TECH SPECS -->
   <section class="specs-section">
     <div class="specs-container">
       <h2 class="section-title">Tech Specs</h2>
       <div class="specs-grid">
-        
         <div class="spec-card">
           <div class="spec-icon">🌊</div>
           <div class="spec-label">Technology</div>
           <div class="spec-value">Piezo Ultrasonic Misting</div>
         </div>
-
         <div class="spec-card">
           <div class="spec-icon">💧</div>
           <div class="spec-label">Tank Capacity</div>
           <div class="spec-value">Triple 100ml Tanks</div>
         </div>
-
         <div class="spec-card">
           <div class="spec-icon">⏳</div>
           <div class="spec-label">Duration</div>
           <div class="spec-value">30 Days Continuous</div>
         </div>
-
         <div class="spec-card">
           <div class="spec-icon">⚙️</div>
           <div class="spec-label">Installation</div>
           <div class="spec-value">Universal Ceiling Fan Mount</div>
         </div>
-
         <div class="spec-card">
           <div class="spec-icon">⚡</div>
           <div class="spec-label">Power</div>
           <div class="spec-value">Low Energy Consumption</div>
         </div>
-
         <div class="spec-card">
           <div class="spec-icon">🤫</div>
           <div class="spec-label">Operation</div>
           <div class="spec-value">Whisper-Quiet Performance</div>
         </div>
-
         <div class="spec-card" style="grid-column: 1 / -1; align-items: center; text-align: center;">
           <div class="spec-icon">✨</div>
           <div class="spec-label">Design</div>
           <div class="spec-value">Sleek Cylindrical Form factor crafted to blend into modern ceilings seamlessly.</div>
         </div>
-
       </div>
     </div>
   </section>
@@ -608,7 +833,223 @@
     </div>
   </footer>
 
+  <!-- ELEVATOR NAVIGATION BUTTONS HTML -->
+  <button id="scrollDownBtn" class="floating-nav-btn" aria-label="Scroll below video">
+    <i data-lucide="arrow-down"></i>
+  </button>
+  <button id="scrollUpBtn" class="floating-nav-btn" aria-label="Scroll before video">
+    <i data-lucide="arrow-up"></i>
+  </button>
+
   <script>
+    /* ===== ELEVATOR NAVIGATION JAVASCRIPT ===== */
+    const scrollDownBtn = document.getElementById('scrollDownBtn');
+    const scrollUpBtn = document.getElementById('scrollUpBtn');
+    const preVideoSection = document.getElementById('pre-video-section');
+    const postVideoSection = document.getElementById('post-video-section');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+      const progressBar = document.getElementById('scrollProgressBar');
+      const scrollPercentage = (scrollY / maxScroll) * 100;
+      if (progressBar) progressBar.style.width = scrollPercentage + '%';
+
+      if (scrollY < 500) {
+        scrollDownBtn.classList.add('visible');
+      } else {
+        scrollDownBtn.classList.remove('visible');
+      }
+
+      if (scrollY > maxScroll - 1000) {
+        scrollUpBtn.classList.add('visible');
+      } else {
+        scrollUpBtn.classList.remove('visible');
+      }
+    });
+
+    scrollDownBtn.addEventListener('click', () => {
+      postVideoSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    scrollUpBtn.addEventListener('click', () => {
+      preVideoSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* ===== MEDIA CAROUSEL LOGIC (WITH INFINITE LOOP) ===== */
+    document.addEventListener("DOMContentLoaded", function() {
+      const viewport = document.getElementById('carouselViewport');
+      const originalSlides = Array.from(document.querySelectorAll('.carousel-slide'));
+      const progressWrapper = document.getElementById('carouselProgressWrapper');
+      const playBtn = document.getElementById('carouselPlayBtn');
+
+      let currentIndex = 0;
+      const slideDuration = 5000;
+      let timer = null;
+      let isPaused = false;
+      let startTime = 0;
+      let remainingTime = slideDuration;
+
+      // --- 1. SETUP INFINITE SCROLL CLONES ---
+      const firstClone = originalSlides[0].cloneNode(true);
+      const lastClone = originalSlides[originalSlides.length - 1].cloneNode(true);
+      
+      firstClone.classList.add('is-clone');
+      lastClone.classList.add('is-clone');
+      
+      viewport.appendChild(firstClone);
+      viewport.insertBefore(lastClone, originalSlides[0]);
+      
+      const allSlides = document.querySelectorAll('.carousel-slide');
+
+      // Initialize scroll position to the first REAL slide
+      setTimeout(() => {
+        viewport.style.scrollBehavior = 'auto';
+        viewport.scrollLeft = allSlides[1].offsetLeft;
+        viewport.style.scrollBehavior = 'smooth';
+      }, 100);
+
+      // --- 2. INFINITE SCROLL JUMP LISTENER ---
+      viewport.addEventListener('scroll', () => {
+        if (viewport.scrollLeft <= 0) {
+          viewport.style.scrollBehavior = 'auto';
+          viewport.scrollLeft = allSlides[allSlides.length - 2].offsetLeft;
+          viewport.style.scrollBehavior = 'smooth';
+        }
+        else if (viewport.scrollLeft >= viewport.scrollWidth - viewport.clientWidth - 1) {
+          viewport.style.scrollBehavior = 'auto';
+          viewport.scrollLeft = allSlides[1].offsetLeft;
+          viewport.style.scrollBehavior = 'smooth';
+        }
+      });
+
+      // --- 3. GENERATE PROGRESS BARS ---
+      originalSlides.forEach(() => {
+        const bar = document.createElement('div');
+        bar.className = 'carousel-bar';
+        const fill = document.createElement('div');
+        fill.className = 'carousel-fill';
+        bar.appendChild(fill);
+        progressWrapper.appendChild(bar);
+      });
+      
+      const bars = document.querySelectorAll('.carousel-bar'); 
+      const fills = document.querySelectorAll('.carousel-fill');
+
+      function updateProgressUI(index) {
+        bars.forEach((bar, i) => {
+          const fill = fills[i];
+          fill.style.transition = 'none';
+          if (i === index) {
+            bar.classList.add('active'); 
+          } else {
+            bar.classList.remove('active'); 
+            fill.style.width = '0%'; 
+          }
+        });
+      }
+
+      // --- 4. CORE PLAYBACK LOGIC ---
+      function startProgress(index) {
+        if (isPaused) return;
+        clearTimeout(timer);
+
+        // Pause all videos, then play the active one (offset by 1 for clone)
+        allSlides.forEach(s => { const v = s.querySelector('video'); if (v) v.pause(); });
+        const activeVid = allSlides[index + 1].querySelector('video');
+        if (activeVid) { activeVid.currentTime = 0; activeVid.play(); }
+
+        const fill = fills[index];
+        fill.style.transition = 'none';
+        
+        const startWidth = ((slideDuration - remainingTime) / slideDuration) * 100;
+        fill.style.width = startWidth + '%';
+        void fill.offsetWidth;
+        fill.style.transition = `width ${remainingTime}ms linear`;
+        fill.style.width = '100%';
+
+        startTime = Date.now();
+        
+        timer = setTimeout(() => {
+          // Scroll smoothly into the next slide (which might be a clone)
+          const nextDomIndex = index + 2; 
+          viewport.scrollTo({ left: allSlides[nextDomIndex].offsetLeft, behavior: 'smooth' });
+        }, remainingTime);
+      }
+
+      function pauseProgress() {
+        if (isPaused) return;
+        isPaused = true;
+        playBtn.innerHTML = '▶';
+        clearTimeout(timer);
+        
+        const elapsed = Date.now() - startTime;
+        remainingTime = Math.max(0, remainingTime - elapsed);
+
+        const fill = fills[currentIndex];
+        const computedWidth = window.getComputedStyle(fill).width;
+        fill.style.transition = 'none';
+        fill.style.width = computedWidth;
+
+        const activeVid = allSlides[currentIndex + 1].querySelector('video');
+        if(activeVid) activeVid.pause();
+      }
+
+      function resumeProgress() {
+        if (!isPaused) return;
+        isPaused = false;
+        playBtn.innerHTML = '⏸';
+        startProgress(currentIndex);
+      }
+
+      playBtn.addEventListener('click', () => {
+        if (isPaused) resumeProgress();
+        else pauseProgress();
+      });
+
+      // Dot navigation
+      bars.forEach((bar, index) => {
+        bar.addEventListener('click', () => {
+           const scrollPos = allSlides[index + 1].offsetLeft;
+           viewport.scrollTo({ left: scrollPos, behavior: 'smooth' });
+        });
+      });
+
+      // --- 5. OBSERVER FOR TEXT ANIMATIONS & SYNC ---
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            
+            const domIndex = Array.from(allSlides).indexOf(entry.target);
+            
+            // Ignore observer triggers for clones 
+            if (domIndex === 0 || domIndex === allSlides.length - 1) return;
+
+            const realIndex = domIndex - 1;
+
+            allSlides.forEach(s => s.classList.remove('is-active'));
+            entry.target.classList.add('is-active');
+
+            if (realIndex !== currentIndex) {
+              currentIndex = realIndex;
+              remainingTime = slideDuration; 
+              updateProgressUI(currentIndex);
+              if (!isPaused) startProgress(currentIndex);
+            }
+          }
+        });
+      }, {
+        root: viewport,
+        threshold: 0.5 
+      });
+
+      allSlides.forEach(slide => observer.observe(slide));
+
+      updateProgressUI(0);
+      setTimeout(() => startProgress(0), 150);
+    });
+
     /* VIDEO SCROLL */
     const video = document.getElementById('scroll-video');
     const videoContainer = document.getElementById('video-container');
@@ -724,10 +1165,8 @@
     };
 
     function switchFeature(feature) {
-      // 1. Update the Phone Screen
       document.getElementById('phone-screen').innerHTML = screensHtml[feature];
 
-      // 2. Reset all cards to default (inactive) state
       const cards = document.querySelectorAll('.feature-card');
       cards.forEach(card => {
         card.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
@@ -749,7 +1188,6 @@
         }
       });
 
-      // 3. Highlight the Active Card
       const activeCard = document.getElementById('card-' + feature);
       if(activeCard) {
         activeCard.classList.remove('bg-[#1a1c23]', 'hover:bg-[#1a1c23]/80', 'text-[#CBCBCB]');
@@ -772,18 +1210,16 @@
       }
     }
 
-    // Initialize the first feature screen and generate Lucide icons
     switchFeature('smartphone');
     lucide.createIcons();
-
 
     /* GALLERY */
     const items = document.querySelectorAll('.gallery-item');
     const numbers = document.querySelectorAll('.dial-num');
-    const slider = document.getElementById('gallerySlider');
+    const gallerySlider = document.getElementById('gallerySlider');
 
-    slider.max = items.length - 1;
-    slider.value = Math.floor(items.length / 2);
+    gallerySlider.max = items.length - 1;
+    gallerySlider.value = Math.floor(items.length / 2);
 
     function updateGalleryAndDial(position) {
       items.forEach((item, index) => {
@@ -813,17 +1249,19 @@
       });
     }
 
-    updateGalleryAndDial(parseFloat(slider.value));
+    updateGalleryAndDial(parseFloat(gallerySlider.value));
 
-    slider.addEventListener('input', (e) => {
+    gallerySlider.addEventListener('input', (e) => {
       updateGalleryAndDial(parseFloat(e.target.value));
     });
 
-    slider.addEventListener('change', (e) => {
+    gallerySlider.addEventListener('change', (e) => {
       const nearestImageIndex = Math.round(parseFloat(e.target.value));
-      slider.value = nearestImageIndex;
+      gallerySlider.value = nearestImageIndex;
       updateGalleryAndDial(nearestImageIndex);
     });
+
+    
   </script>
 
 </body>
